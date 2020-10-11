@@ -24,6 +24,9 @@ public class Pong {
     // TODO More attributes
     private int pointsLeft;
     private int pointsRight;
+    private Ball b;
+    private Paddle p1;
+    private Paddle p2;
 
 
     // TODO Constructor

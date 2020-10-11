@@ -16,13 +16,11 @@ public class Test {
     }
 
     void test() {
-        Ball b = new Ball();
+        Ball b = new Ball(200,200);
         out.println("ssss");
         // Create an object  ...
-        // .. call methods to test.
-
-
-
+        // .. call methods to test
+        out.println(b.getDx()+" | "+b.getDy());
     }
 
 
