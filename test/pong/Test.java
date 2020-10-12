@@ -16,7 +16,7 @@ public class Test {
     }
 
     void test() {
-        Ball b = new Ball(200,200);
+        Ball b = new Ball();
         out.println("ssss");
         // Create an object  ...
         // .. call methods to test

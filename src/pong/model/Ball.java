@@ -15,18 +15,44 @@ public class Ball implements IPositionable {
     private double x,y;    //Positions
     private double dx, dy;  //Velocities
 
-    public Ball(double x, double y, double dx, double dy) {
+    public Ball(double x, double y, double dx, double dy) { // For testing purposes only
         this.x = x;
         this.y = y;
         this.dx = dx;
         this.dy = dy;
     }
 
-    public Ball(double x, double y) {
-        this.x = x;
-        this.y = y;
-        this.dx = rand.nextDouble()+0.5;
-        this.dy = rand.nextDouble()+0.5;
+    public Ball() { // Ball for generation in center of code
+        this.x = Pong.GAME_CENTER_X-this.getWidth()/2;
+        this.y = Pong.GAME_CENTER_Y-this.getHeight()/2;
+        randSpeed();
+    }
+
+    // Randomizes an angle between 45 and -45.
+    // Converts to raidans and separates vector into x and y composants.
+    // x and y composants are the relative speeds needed to achieve the desired angle.
+    private void randSpeed() {
+        double vectorSpeed = 2;
+        double angle = Math.toRadians(rand.nextInt(91)-45);
+        int invert = rand.nextInt(2);
+        dy = Math.sin(angle)*vectorSpeed;
+        dx = Math.cos(angle)*vectorSpeed;
+        if (invert == 1) {
+            dx *= -1;
+            dy *= -1;
+        }
+    }
+
+    public boolean isMovingRight() {
+        if (dx > 0)
+            return true;
+        return false;
+    }
+
+    public boolean isMovingLeft() {
+        if (dx < 0)
+            return true;
+        return false;
     }
 
     public void move() {
@@ -34,11 +60,11 @@ public class Ball implements IPositionable {
         this.y += dy;
     }
 
-    public void invertVx() {
+    public void invertDx() {
         this.dx *= -1;
     }
 
-    public void invertVy() {
+    public void invertDy() {
         this.dy *= -1;
     }
 

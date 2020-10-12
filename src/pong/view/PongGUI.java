@@ -116,7 +116,7 @@ public class PongGUI extends Application implements IEventHandler {
         // TODO Create objects and connect to a full object model
         leftPaddle = new Paddle(20, GAME_HEIGHT/2-PADDLE_HEIGHT/2);
         rightPaddle = new Paddle(GAME_WIDTH-20, GAME_HEIGHT/2-PADDLE_HEIGHT/2);
-        Ball b = new Ball(GAME_WIDTH/2, GAME_HEIGHT/2);
+        Ball b = new Ball();
 
         pong = new Pong(b, leftPaddle, rightPaddle);
 
