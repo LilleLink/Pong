@@ -23,6 +23,7 @@ import pong.view.theme.Cool;
 import pong.view.theme.Duckie;
 
 import static java.lang.System.out;
+import static pong.model.Paddle.PADDLE_HEIGHT;
 import static pong.model.Paddle.PADDLE_SPEED;
 import static pong.model.Pong.GAME_HEIGHT;
 import static pong.model.Pong.GAME_WIDTH;
@@ -113,7 +114,11 @@ public class PongGUI extends Application implements IEventHandler {
         Paddle leftPaddle = null;
 
         // TODO Create objects and connect to a full object model
+        leftPaddle = new Paddle(20, GAME_HEIGHT/2-PADDLE_HEIGHT/2);
+        rightPaddle = new Paddle(GAME_WIDTH-20, GAME_HEIGHT/2-PADDLE_HEIGHT/2);
+        Ball b = new Ball(GAME_WIDTH/2, GAME_HEIGHT/2);
 
+        pong = new Pong(b, leftPaddle, rightPaddle);
 
         // Map objects to sprites
         assets.bind(rightPaddle, assets.rightPaddle);

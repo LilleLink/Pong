@@ -31,21 +31,36 @@ public class Pong {
 
     // TODO Constructor
 
+    public Pong(Ball b, Paddle p1, Paddle p2) {
+        this.b = b;
+        this.p1 = p1;
+        this.p2 = p2;
+    }
+
     // --------  Game Logic -------------
 
     private long timeForLastHit;         // To avoid multiple collisions
 
     public void update(long now) {
+       // TODO Gamelogic here
+        b.move();
+        if (ballEscaped(b)) {
 
-       // tODO Gamelogic here
+        }
     }
 
+    private boolean ballEscaped(Ball b) {
+
+    }
 
     // --- Used by GUI  ------------------------
 
     public List<IPositionable> getPositionables() {
         List<IPositionable> drawables = new ArrayList<>();
         // TODO
+        drawables.add(p1);
+        drawables.add(p2);
+        drawables.add(b);
         return drawables;
     }
 
