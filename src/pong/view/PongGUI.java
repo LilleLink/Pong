@@ -118,7 +118,7 @@ public class PongGUI extends Application implements IEventHandler {
         rightPaddle = new Paddle(GAME_WIDTH-20, GAME_HEIGHT/2-PADDLE_HEIGHT/2);
         Ball b = new Ball();
 
-        pong = new Pong(b, leftPaddle, rightPaddle);
+        pong = new Pong(b, leftPaddle, rightPaddle, new Floor(), new Ceiling());
 
         // Map objects to sprites
         assets.bind(rightPaddle, assets.rightPaddle);

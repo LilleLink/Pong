@@ -29,13 +29,16 @@ public class Pong {
     private Ball b;
     private Paddle p1;
     private Paddle p2;
-
+    private Floor f;
+    private Ceiling c;
     // TODO Constructor
 
-    public Pong(Ball b, Paddle p1, Paddle p2) {
+    public Pong(Ball b, Paddle p1, Paddle p2, Floor f, Ceiling c) {
         this.b = b;
         this.p1 = p1;
         this.p2 = p2;
+        this.f = f;
+        this.c = c;
     }
 
     // --------  Game Logic -------------
@@ -48,9 +51,14 @@ public class Pong {
         if (ballEscaped(b)) {
             b = new Ball();
         }
+        if (collision(b, c) || collision(b, f)){
+            b.invertDy();
+        }
 
+    }
 
-
+    public boolean collision(IPositionable a, IPositionable b) {
+        //if (a.getX() >= b.getX() && a.getY() >= b.getY())
     }
 
     private boolean ballEscaped(Ball b) {
@@ -60,10 +68,6 @@ public class Pong {
         } else if (b.getX()+b.getWidth() > GAME_WIDTH) { // Left wall
             pointsLeft++;
             return true;
-        }
-        else if (b.getY() < 0 || b.getY()+b.getHeight() > GAME_HEIGHT) { // Ceiling/Floor
-            b.invertDy();
-            return false; // Should just bounce
         }
         return false;
     }
