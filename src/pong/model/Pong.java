@@ -1,11 +1,16 @@
 package pong.model;
 
 
+import javafx.animation.AnimationTimer;
+import jdk.jfr.Event;
 import pong.event.ModelEvent;
 import pong.event.EventBus;
+import pong.view.PongMenu;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /*
  * Logic for the Pong Game
@@ -21,7 +26,7 @@ public class Pong {
     public static final long HALF_SEC = 500_000_000;
     public static final double GAME_CENTER_X = GAME_WIDTH/2;
     public static final double GAME_CENTER_Y = GAME_HEIGHT/2;
-
+    private Timer timer;
 
     private int pointsLeft;
     private int pointsRight;
@@ -30,6 +35,7 @@ public class Pong {
     private Paddle p2;
     private Floor f;
     private Ceiling c;
+    public static boolean collisionPossible = true;
 
     public Pong(Ball b, Paddle p1, Paddle p2, Floor f, Ceiling c) {
         this.b = b;
@@ -37,10 +43,13 @@ public class Pong {
         this.p2 = p2;
         this.f = f;
         this.c = c;
+        timer = new Timer();
+        timer.schedule(new T);
     }
 
     // --------  Game Logic -------------
 
+    //TODO Implement timeforlasthit
     private long timeForLastHit;         // To avoid multiple collisions
 
     public void update(long now) {
@@ -49,15 +58,23 @@ public class Pong {
         p2.move();
         if (ballEscaped(b)) {
             b = new Ball();
-        }
-        if (collision(c, b) || collision(f, b)){
-            System.out.println("Ceiling: "+collision(c,b)+" | "+"Floor: "+collision(f,b));
-            b.invertDy();
-        }
-        if (collision(p1,b) || collision(p2,b)) {
-            b.invertDx();
+            EventBus.INSTANCE.publish(new ModelEvent(ModelEvent.Type.NEW_BALL));
         }
 
+        if (collisionPossible) {
+            if (collision(c, b) || collision(f, b)){
+                b.invertDy();
+                EventBus.INSTANCE.publish(new ModelEvent(ModelEvent.Type.BALL_HIT_WALL_CEILING));
+            }
+            if (collision(p1,b) || collision(p2,b)) {
+                b.invertDx();
+                b.setDx(b.getDx()*BALL_SPEED_FACTOR);
+                b.setDy(b.getDy()*BALL_SPEED_FACTOR);
+                EventBus.INSTANCE.publish(new ModelEvent(ModelEvent.Type.BALL_HIT_PADDLE));
+                collisionPossible = false;
+                System.out.println(collisionPossible);
+            }
+        }
     }
 
     public boolean collision(IPositionable a, IPositionable b) {
@@ -105,10 +122,21 @@ public class Pong {
     }
 
     public void setSpeedRightPaddle(double dy) {
-        // TODO
     }
 
     public void setSpeedLeftPaddle(double dy) {
-        // TODO
+    }
+
+    public static void setCollisionPossible() {
+        collisionPossible = true;
+        System.out.println(collisionPossible);
+    }
+}
+
+class task extends TimerTask {
+    @Override
+    public void run() {
+        System.out.println("111111");
+        Pong.setCollisionPossible();
     }
 }

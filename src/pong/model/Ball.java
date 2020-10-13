@@ -72,7 +72,7 @@ public class Ball implements IPositionable {
         return x;
     }
 
-    public void setX(int x) {
+    public void setX(double x) {
         this.x = x;
     }
 
@@ -98,7 +98,7 @@ public class Ball implements IPositionable {
         return dx;
     }
 
-    public void setDx(int dx) {
+    public void setDx(double dx) {
         this.dx = dx;
     }
 
@@ -106,7 +106,7 @@ public class Ball implements IPositionable {
         return dy;
     }
 
-    public void setDy(int dy) {
+    public void setDy(double dy) {
         this.dy = dy;
     }
 }

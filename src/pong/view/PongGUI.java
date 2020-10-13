@@ -141,11 +141,11 @@ public class PongGUI extends Application implements IEventHandler {
     @Override
     public void onModelEvent(ModelEvent evt) {
         if (evt.type == ModelEvent.Type.NEW_BALL) {
-            // TODO Optional
+            assets.ballHitPaddle.play();
         } else if (evt.type == ModelEvent.Type.BALL_HIT_PADDLE) {
             assets.ballHitPaddle.play();
         } else if (evt.type == ModelEvent.Type.BALL_HIT_WALL_CEILING) {
-           // TODO Optional
+            assets.ballHitPaddle.play();
         }
     }
 
