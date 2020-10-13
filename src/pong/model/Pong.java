@@ -23,7 +23,6 @@ public class Pong {
     public static final double GAME_CENTER_Y = GAME_HEIGHT/2;
 
 
-    // TODO More attributes
     private int pointsLeft;
     private int pointsRight;
     private Ball b;
@@ -31,7 +30,6 @@ public class Pong {
     private Paddle p2;
     private Floor f;
     private Ceiling c;
-    // TODO Constructor
 
     public Pong(Ball b, Paddle p1, Paddle p2, Floor f, Ceiling c) {
         this.b = b;
@@ -51,14 +49,15 @@ public class Pong {
         if (ballEscaped(b)) {
             b = new Ball();
         }
-        if (collision(b, c) || collision(b, f)){
+        if (collision(c, b) || collision(f, b)){
             b.invertDy();
         }
 
     }
 
     public boolean collision(IPositionable a, IPositionable b) {
-        //if (a.getX() >= b.getX() && a.getY() >= b.getY())
+        return a.getX() <= b.getX() + b.getWidth() && a.getX() + a.getWidth() >= b.getX()
+                && a.getY() <= b.getY() + b.getHeight() && a.getY() + a.getHeight() >= a.getHeight();
     }
 
     private boolean ballEscaped(Ball b) {
@@ -76,10 +75,11 @@ public class Pong {
 
     public List<IPositionable> getPositionables() {
         List<IPositionable> drawables = new ArrayList<>();
-        // TODO
         drawables.add(p1);
         drawables.add(p2);
         drawables.add(b);
+        drawables.add(f);
+        drawables.add(c);
         return drawables;
     }
 

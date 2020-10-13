@@ -5,9 +5,9 @@ import static pong.model.Pong.*;
 public class Ceiling implements IPositionable {
 
     public static double x = 0;
-    public static double y = 0;
+    public static double y = -10;
     public static double width = GAME_WIDTH;
-    public static double height = 0;
+    public static double height = 10;
 
     @Override
     public double getX() {

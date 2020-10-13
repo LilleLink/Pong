@@ -4,11 +4,10 @@ import static pong.model.Pong.*;
 
 public class Floor implements IPositionable {
 
-    public static double x = GAME_HEIGHT;
-    public static double y = 0;
+    public static double x = 0;
+    public static double y = GAME_HEIGHT;
     public static double width = GAME_WIDTH;
-    public static double height = 0;
-
+    public static double height = 10;
 
     @Override
     public double getX() {
