@@ -44,14 +44,18 @@ public class Pong {
     private long timeForLastHit;         // To avoid multiple collisions
 
     public void update(long now) {
-        // TODO Gamelogic here
         b.move();
+        p1.move();
+        p2.move();
         if (ballEscaped(b)) {
             b = new Ball();
         }
         if (collision(c, b) || collision(f, b)){
             System.out.println("Ceiling: "+collision(c,b)+" | "+"Floor: "+collision(f,b));
             b.invertDy();
+        }
+        if (collision(p1,b) || collision(p2,b)) {
+            b.invertDx();
         }
 
     }

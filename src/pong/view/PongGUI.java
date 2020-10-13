@@ -51,16 +51,16 @@ public class PongGUI extends Application implements IEventHandler {
         KeyCode kc = event.getCode();
         switch (kc) {
             case UP:
-                // TODO
+                pong.getP2().setMovingUp(true);
                 break;
             case DOWN:
-                // TODO
+                pong.getP2().setMovingDown(true);
                 break;
             case Q:
-                pong.getP1()
+                pong.getP1().setMovingUp(true);
                 break;
             case A:
-
+                pong.getP1().setMovingDown(true);
                 break;
             default:  // Nothing
         }
@@ -74,11 +74,11 @@ public class PongGUI extends Application implements IEventHandler {
         switch (kc) {
             case UP:
             case DOWN:
-                // TODO
+                pong.getP2().stop();
                 break;
             case A:
             case Q:
-                // TODO
+                pong.getP1().stop();
                 break;
             default: // Nothing
         }
@@ -113,7 +113,6 @@ public class PongGUI extends Application implements IEventHandler {
         Paddle rightPaddle = null;
         Paddle leftPaddle = null;
 
-        // TODO Create objects and connect to a full object model
         leftPaddle = new Paddle(20, GAME_HEIGHT/2-PADDLE_HEIGHT/2);
         rightPaddle = new Paddle(GAME_WIDTH-20, GAME_HEIGHT/2-PADDLE_HEIGHT/2);
         Ball b = new Ball();
