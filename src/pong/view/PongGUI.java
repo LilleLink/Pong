@@ -57,10 +57,10 @@ public class PongGUI extends Application implements IEventHandler {
                 // TODO
                 break;
             case Q:
-                // TODO
+                pong.getP1()
                 break;
             case A:
-                // TODO
+
                 break;
             default:  // Nothing
         }
@@ -153,7 +153,7 @@ public class PongGUI extends Application implements IEventHandler {
     // ------- Optional ------------
     private void handleOptions(ActionEvent e){
         CheckMenuItem i = (CheckMenuItem) e.getSource();
-        if( i.isSelected()){
+        if(i.isSelected()){
             // TODO Optional if using AI
             out.println("AI on");
         }else {

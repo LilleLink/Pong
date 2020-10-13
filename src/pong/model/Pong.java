@@ -50,6 +50,7 @@ public class Pong {
             b = new Ball();
         }
         if (collision(c, b) || collision(f, b)){
+            System.out.println("Ceiling: "+collision(c,b)+" | "+"Floor: "+collision(f,b));
             b.invertDy();
         }
 
@@ -57,7 +58,7 @@ public class Pong {
 
     public boolean collision(IPositionable a, IPositionable b) {
         return a.getX() <= b.getX() + b.getWidth() && a.getX() + a.getWidth() >= b.getX()
-                && a.getY() <= b.getY() + b.getHeight() && a.getY() + a.getHeight() >= a.getHeight();
+                && a.getY() <= b.getY() + b.getHeight() && a.getY() + a.getHeight() >= b.getY();
     }
 
     private boolean ballEscaped(Ball b) {
@@ -81,6 +82,14 @@ public class Pong {
         drawables.add(f);
         drawables.add(c);
         return drawables;
+    }
+
+    public Paddle getP1() {
+        return p1;
+    }
+
+    public Paddle getP2() {
+        return p2;
     }
 
     public int getPointsLeft() {
