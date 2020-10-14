@@ -2,6 +2,7 @@ package pong.model;
 
 
 import javafx.animation.AnimationTimer;
+import javafx.concurrent.Task;
 import jdk.jfr.Event;
 import pong.event.ModelEvent;
 import pong.event.EventBus;
@@ -44,7 +45,7 @@ public class Pong {
         this.f = f;
         this.c = c;
         timer = new Timer();
-        timer.schedule(new T);
+        timer.schedule(new task(), 500);
     }
 
     // --------  Game Logic -------------
@@ -61,20 +62,20 @@ public class Pong {
             EventBus.INSTANCE.publish(new ModelEvent(ModelEvent.Type.NEW_BALL));
         }
 
-        if (collisionPossible) {
-            if (collision(c, b) || collision(f, b)){
-                b.invertDy();
-                EventBus.INSTANCE.publish(new ModelEvent(ModelEvent.Type.BALL_HIT_WALL_CEILING));
-            }
-            if (collision(p1,b) || collision(p2,b)) {
-                b.invertDx();
-                b.setDx(b.getDx()*BALL_SPEED_FACTOR);
-                b.setDy(b.getDy()*BALL_SPEED_FACTOR);
-                EventBus.INSTANCE.publish(new ModelEvent(ModelEvent.Type.BALL_HIT_PADDLE));
-                collisionPossible = false;
-                System.out.println(collisionPossible);
-            }
+
+        if ((collision(c, b) || collision(f, b)) && c){
+            b.invertDy();
+            EventBus.INSTANCE.publish(new ModelEvent(ModelEvent.Type.BALL_HIT_WALL_CEILING));
         }
+        if (collision(p1,b) || collision(p2,b)) {
+            b.invertDx();
+            b.setDx(b.getDx()*BALL_SPEED_FACTOR);
+            b.setDy(b.getDy()*BALL_SPEED_FACTOR);
+            EventBus.INSTANCE.publish(new ModelEvent(ModelEvent.Type.BALL_HIT_PADDLE));
+            collisionPossible = false;
+            timer.schedule(new task(), 500);
+        }
+
     }
 
     public boolean collision(IPositionable a, IPositionable b) {
