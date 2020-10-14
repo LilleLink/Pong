@@ -50,9 +50,6 @@ public class Pong {
 
     // --------  Game Logic -------------
 
-    //TODO Implement timeforlasthit
-    private long timeForLastHit;         // To avoid multiple collisions
-
     public void update(long now) {
         b.move();
         p1.move();
@@ -63,11 +60,11 @@ public class Pong {
         }
 
 
-        if ((collision(c, b) || collision(f, b)) && c){
+        if (collision(c, b) || collision(f, b)){
             b.invertDy();
             EventBus.INSTANCE.publish(new ModelEvent(ModelEvent.Type.BALL_HIT_WALL_CEILING));
         }
-        if (collision(p1,b) || collision(p2,b)) {
+        if ((collision(p1,b) || collision(p2,b)) && collisionPossible) {
             b.invertDx();
             b.setDx(b.getDx()*BALL_SPEED_FACTOR);
             b.setDy(b.getDy()*BALL_SPEED_FACTOR);
@@ -130,14 +127,12 @@ public class Pong {
 
     public static void setCollisionPossible() {
         collisionPossible = true;
-        System.out.println(collisionPossible);
     }
 }
 
 class task extends TimerTask {
     @Override
     public void run() {
-        System.out.println("111111");
         Pong.setCollisionPossible();
     }
 }
