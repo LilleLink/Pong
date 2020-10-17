@@ -32,7 +32,7 @@ public class Ball implements IPositionable {
     // Converts to raidans and separates vector into x and y composants.
     // x and y composants are the relative speeds needed to achieve the desired angle.
     private void randSpeed() {
-        double vectorSpeed = 4;
+        double vectorSpeed = 3.5;
         double angle = Math.toRadians(rand.nextInt(91)-45);
         int invert = rand.nextInt(2);
         dy = Math.sin(angle)*vectorSpeed;
