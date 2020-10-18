@@ -1,12 +1,8 @@
 package pong.model;
 
 
-import javafx.animation.AnimationTimer;
-import javafx.concurrent.Task;
-import jdk.jfr.Event;
 import pong.event.ModelEvent;
 import pong.event.EventBus;
-import pong.view.PongMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,29 +47,41 @@ public class Pong {
     // --------  Game Logic -------------
 
     public void update(long now) {
+        // Move objects
         b.move();
         p1.move();
         p2.move();
+
+        // Check all collisions including BALLS :))))))
+        ballCollisions();
+
+        // Check if paddles are out of bounds, fix if they are
+        checkPaddlePos(p1);
+        checkPaddlePos(p2);
+    }
+
+    private void ballCollisions() {
+        // Escaped?
         if (ballEscaped(b)) {
             b = new Ball();
             EventBus.INSTANCE.publish(new ModelEvent(ModelEvent.Type.NEW_BALL));
         }
 
+        // Paddles?
+        paddleCollisions(p1, b);
+        paddleCollisions(p2, b);
+
+        // Floor/Ceilings?
         if (collision(c, b) || collision(f, b)){
             b.invertDy();
             EventBus.INSTANCE.publish(new ModelEvent(ModelEvent.Type.BALL_HIT_WALL_CEILING));
         }
 
-        checkPaddlePos(p1);
-        checkPaddlePos(p2);
-        checkCollisions(p1,b);
-        checkCollisions(p2,b);
     }
 
-    private void checkCollisions(Paddle p, Ball b) {
+    private void paddleCollisions(Paddle p, Ball b) {
         if (collisionPossible && collision(p, b)) {
             b.invertDx();
-            // Check supercollision
             if (superCollision(p,b)) {
                 b.setDx(b.getDx()*1.5);
                 b.setDy(b.getDy()*1.5);
