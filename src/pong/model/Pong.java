@@ -59,72 +59,49 @@ public class Pong {
             EventBus.INSTANCE.publish(new ModelEvent(ModelEvent.Type.NEW_BALL));
         }
 
-
         if (collision(c, b) || collision(f, b)){
             b.invertDy();
             EventBus.INSTANCE.publish(new ModelEvent(ModelEvent.Type.BALL_HIT_WALL_CEILING));
         }
 
-        //TODO GENERIC FUNCTIONAL DECOMPOSITION
-        if (collision(p1, c)) {
-            p1.stop();
-            pValidPos(p1, c);
-        } else if (collision(p1, f)) {
-            p1.stop();
-            pValidPos(p1, f);
-        }
+        checkPaddlePos(p1);
+        checkPaddlePos(p2);
+        checkCollisions(p1,b);
+        checkCollisions(p2,b);
+    }
 
-        if (collision(p2, c)) {
-            p2.stop();
-            pValidPos(p2, c);
-        } else if (collision(p2, f)) {
-            p2.stop();
-            pValidPos(p2, f);
-        }
-
-        //TODO REMOVE REDUNDANCY
-        if (collisionPossible) {
-            if (collision(p1, b)) {
-                b.invertDx();
-
-                // Control supercolission, if not, speedfactor
-                if (superCollision(p1, b)) {
-                    b.setDx(b.getDx()*1.5);
-                    b.setDy(b.getDy()*1.5);
-                } else {
-                    b.setDx(b.getDx()*BALL_SPEED_FACTOR);
-                    b.setDy(b.getDy()*BALL_SPEED_FACTOR);
-                }
-
-                EventBus.INSTANCE.publish(new ModelEvent(ModelEvent.Type.BALL_HIT_PADDLE));
-                collisionPossible = false;
-                timer.schedule(new task(), 500);
-            } else if (collision(p2, b)) {
-                b.invertDx();
-
-                // Control supercolission, if not, speedfactor
-                if (superCollision(p2, b)) {
-                    b.setDx(b.getDx()*1.5);
-                    b.setDy(b.getDy()*1.5);
-                } else {
-                    b.setDx(b.getDx()*BALL_SPEED_FACTOR);
-                    b.setDy(b.getDy()*BALL_SPEED_FACTOR);
-                }
-
-                EventBus.INSTANCE.publish(new ModelEvent(ModelEvent.Type.BALL_HIT_PADDLE));
-                collisionPossible = false;
-                timer.schedule(new task(), 500);
+    private void checkCollisions(Paddle p, Ball b) {
+        if (collisionPossible && collision(p, b)) {
+            b.invertDx();
+            // Check supercollision
+            if (superCollision(p,b)) {
+                b.setDx(b.getDx()*1.5);
+                b.setDy(b.getDy()*1.5);
+            } else {
+                b.setDx(b.getDx()*BALL_SPEED_FACTOR);
+                b.setDy(b.getDy()*BALL_SPEED_FACTOR);
             }
+            EventBus.INSTANCE.publish(new ModelEvent(ModelEvent.Type.BALL_HIT_PADDLE));
+            collisionPossible = false;
+            timer.schedule(new task(), 500);
         }
+    }
 
-
+    private void checkPaddlePos(Paddle p) {
+        if (collision(p, f)) {
+            pValidPos(p, f);
+        } else if (collision(p, c)) {
+            pValidPos(p, c);
+        }
     }
 
     private void pValidPos(Paddle p, Ceiling c) {
+        p.stop();
         p.setY(c.getY()+c.getHeight());
     }
 
     private void pValidPos(Paddle p, Floor f) {
+        p.stop();
         p.setY(f.getY()-p.getHeight());
     }
 
