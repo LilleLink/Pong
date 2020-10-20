@@ -83,8 +83,11 @@ public class Pong {
         if (collisionPossible && collision(p, b)) {
             b.invertDx();
             if (superCollision(p,b)) {
-                b.setDx(b.getDx()*1.5);
-                b.setDy(b.getDy()*1.5);
+                if (Math.abs(b.getDx()) < p.getWidth() && Math.abs(b.getDy()) < p.getHeight()) {
+                    b.setDx(b.getDx()*1.4);
+                    b.setDy(b.getDy()*1.4);
+                    System.out.println(b.getDx()+" | "+b.getDy());
+                }
             } else {
                 b.setDx(b.getDx()*BALL_SPEED_FACTOR);
                 b.setDy(b.getDy()*BALL_SPEED_FACTOR);
