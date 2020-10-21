@@ -9,26 +9,24 @@ import static pong.model.Pong.GAME_HEIGHT;
  * A model class
  *
  */
-public class Paddle implements IPositionable{
+public class Paddle extends AbstractPositionable {
 
     public static final double PADDLE_WIDTH = 10;
     public static final double PADDLE_HEIGHT = 60;
     public static final double PADDLE_SPEED = 5;
-
-    private double x,y;    //Positions
     private boolean isMovingUp;
     private boolean isMovingDown;
 
     public Paddle(double x, double y) {
-        this.x = x;
-        this.y = y;
+        super(x,y);
     }
 
+    @Override
     public void move() {
         if (isMovingDown) {
-            y += PADDLE_SPEED;
+            this.setY(getY()+PADDLE_SPEED);
         } else if (isMovingUp) {
-            y -= PADDLE_SPEED;
+            this.setY(getY()-PADDLE_SPEED);
         }
     }
 
@@ -45,18 +43,6 @@ public class Paddle implements IPositionable{
         isMovingDown = movingDown;
     }
 
-    public double getX() {
-        return x;
-    }
-
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
     @Override
     public double getWidth() {
         return PADDLE_WIDTH;
@@ -67,7 +53,4 @@ public class Paddle implements IPositionable{
         return PADDLE_HEIGHT;
     }
 
-    public void setY(double y) {
-        this.y = y;
-    }
 }

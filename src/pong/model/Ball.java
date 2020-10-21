@@ -6,25 +6,16 @@ import java.util.Random;
  * A Ball for the Pong game
  * A model class
  */
-public class Ball implements IPositionable {
+public class Ball extends AbstractPositionable {
 
     public static final double WIDTH = 40;
     public static final double HEIGHT = 40;
 
     private static Random rand = new Random();
-    private double x,y;    //Positions
     private double dx, dy;  //Velocities
 
-    public Ball(double x, double y, double dx, double dy) { // For testing purposes only
-        this.x = x;
-        this.y = y;
-        this.dx = dx;
-        this.dy = dy;
-    }
-
     public Ball() { // Ball for generation in center of code
-        this.x = Pong.GAME_CENTER_X-this.getWidth()/2;
-        this.y = Pong.GAME_CENTER_Y-this.getHeight()/2;
+        super(Pong.GAME_CENTER_X-WIDTH/2, Pong.GAME_CENTER_Y-HEIGHT/2);
         randSpeed();
     }
 
@@ -43,21 +34,9 @@ public class Ball implements IPositionable {
         }
     }
 
-    public boolean isMovingRight() {
-        if (dx > 0)
-            return true;
-        return false;
-    }
-
-    public boolean isMovingLeft() {
-        if (dx < 0)
-            return true;
-        return false;
-    }
-
     public void move() {
-        this.x += dx;
-        this.y += dy;
+        setX(getX()+getDx());
+        setY(getY()+getDy());
     }
 
     public void invertDx() {
@@ -68,18 +47,6 @@ public class Ball implements IPositionable {
         this.dy *= -1;
     }
 
-    public double getX() {
-        return x;
-    }
-
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
     @Override
     public double getWidth() {
         return WIDTH;
@@ -88,10 +55,6 @@ public class Ball implements IPositionable {
     @Override
     public double getHeight() {
         return HEIGHT;
-    }
-
-    public void setY(int y) {
-        this.y = y;
     }
 
     public double getDx() {

@@ -21,9 +21,8 @@ public class Pong {
     public static final double GAME_HEIGHT = 400;
     public static final double BALL_SPEED_FACTOR = 1.02;
     public static final long HALF_SEC = 500_000_000;
-    public static final double GAME_CENTER_X = GAME_WIDTH/2;
-    public static final double GAME_CENTER_Y = GAME_HEIGHT/2;
-    private Timer timer;
+    public static final double GAME_CENTER_X = GAME_WIDTH / 2;
+    public static final double GAME_CENTER_Y = GAME_HEIGHT / 2;
 
     private int pointsLeft;
     private int pointsRight;
@@ -40,8 +39,6 @@ public class Pong {
         this.p2 = p2;
         this.f = f;
         this.c = c;
-        timer = new Timer();
-        timer.schedule(new task(), 500);
     }
 
     // --------  Game Logic -------------
@@ -60,6 +57,8 @@ public class Pong {
         checkPaddlePos(p2);
     }
 
+    private static long lastCollision = System.currentTimeMillis();
+
     private void ballCollisions() {
         // Escaped?
         if (ballEscaped(b)) {
@@ -67,12 +66,12 @@ public class Pong {
             EventBus.INSTANCE.publish(new ModelEvent(ModelEvent.Type.NEW_BALL));
         }
 
-        // Paddles?
+        // Paddles colliding with ball?
         paddleCollisions(p1, b);
         paddleCollisions(p2, b);
 
         // Floor/Ceilings?
-        if (collision(c, b) || collision(f, b)){
+        if (collision(c, b) || collision(f, b)) {
             b.invertDy();
             EventBus.INSTANCE.publish(new ModelEvent(ModelEvent.Type.BALL_HIT_WALL_CEILING));
         }
@@ -80,21 +79,19 @@ public class Pong {
     }
 
     private void paddleCollisions(Paddle p, Ball b) {
-        if (collisionPossible && collision(p, b)) {
+        if (System.currentTimeMillis() > lastCollision + HALF_SEC && collision(p, b)) {
             b.invertDx();
-            if (superCollision(p,b)) {
+            if (superCollision(p, b)) {
                 if (Math.abs(b.getDx()) < p.getWidth() && Math.abs(b.getDy()) < p.getHeight()) {
-                    b.setDx(b.getDx()*1.4);
-                    b.setDy(b.getDy()*1.4);
-                    System.out.println(b.getDx()+" | "+b.getDy());
+                    b.setDx(b.getDx() * 1.4);
+                    b.setDy(b.getDy() * 1.4);
                 }
             } else {
-                b.setDx(b.getDx()*BALL_SPEED_FACTOR);
-                b.setDy(b.getDy()*BALL_SPEED_FACTOR);
+                b.setDx(b.getDx() * BALL_SPEED_FACTOR);
+                b.setDy(b.getDy() * BALL_SPEED_FACTOR);
             }
+            lastCollision = System.currentTimeMillis();
             EventBus.INSTANCE.publish(new ModelEvent(ModelEvent.Type.BALL_HIT_PADDLE));
-            collisionPossible = false;
-            timer.schedule(new task(), 500);
         }
     }
 
@@ -108,12 +105,12 @@ public class Pong {
 
     private void pValidPos(Paddle p, Ceiling c) {
         p.stop();
-        p.setY(c.getY()+c.getHeight());
+        p.setY(c.getY() + c.getHeight());
     }
 
     private void pValidPos(Paddle p, Floor f) {
         p.stop();
-        p.setY(f.getY()-p.getHeight());
+        p.setY(f.getY() - p.getHeight());
     }
 
     private boolean superCollision(Paddle p, Ball b) {
@@ -129,7 +126,7 @@ public class Pong {
         if (b.getX() < 0) { // Right wall
             pointsRight++;
             return true;
-        } else if (b.getX()+b.getWidth() > GAME_WIDTH) { // Left wall
+        } else if (b.getX() + b.getWidth() > GAME_WIDTH) { // Left wall
             pointsLeft++;
             return true;
         }
@@ -164,20 +161,7 @@ public class Pong {
         return pointsRight;
     }
 
-    public void setSpeedRightPaddle(double dy) {
-    }
-
-    public void setSpeedLeftPaddle(double dy) {
-    }
-
     public static void setCollisionPossible() {
         collisionPossible = true;
-    }
-}
-
-class task extends TimerTask {
-    @Override
-    public void run() {
-        Pong.setCollisionPossible();
     }
 }
