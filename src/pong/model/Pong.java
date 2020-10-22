@@ -20,7 +20,7 @@ public class Pong {
     public static final double GAME_WIDTH = 600;
     public static final double GAME_HEIGHT = 400;
     public static final double BALL_SPEED_FACTOR = 1.02;
-    public static final long HALF_SEC = 500_000_000;
+    public static final long HALF_SEC = 500;
     public static final double GAME_CENTER_X = GAME_WIDTH / 2;
     public static final double GAME_CENTER_Y = GAME_HEIGHT / 2;
 
@@ -57,7 +57,7 @@ public class Pong {
         checkPaddlePos(p2);
     }
 
-    private static long lastCollision = System.currentTimeMillis();
+    private long lastCollision = System.currentTimeMillis();
 
     private void ballCollisions() {
         // Escaped?

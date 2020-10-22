@@ -113,8 +113,8 @@ public class PongGUI extends Application implements IEventHandler {
         Paddle rightPaddle = null;
         Paddle leftPaddle = null;
 
-        leftPaddle = new Paddle(20, GAME_HEIGHT/2-PADDLE_HEIGHT/2);
-        rightPaddle = new Paddle(GAME_WIDTH-20, GAME_HEIGHT/2-PADDLE_HEIGHT/2);
+        leftPaddle = new Paddle(20, GAME_HEIGHT/2-PADDLE_HEIGHT/2,0,0);
+        rightPaddle = new Paddle(GAME_WIDTH-20, GAME_HEIGHT/2-PADDLE_HEIGHT/2,0,0);
         Ball b = new Ball();
 
         pong = new Pong(b, leftPaddle, rightPaddle, new Floor(), new Ceiling());

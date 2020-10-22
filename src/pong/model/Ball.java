@@ -12,10 +12,9 @@ public class Ball extends AbstractPositionable {
     public static final double HEIGHT = 40;
 
     private static Random rand = new Random();
-    private double dx, dy;  //Velocities
 
     public Ball() { // Ball for generation in center of code
-        super(Pong.GAME_CENTER_X-WIDTH/2, Pong.GAME_CENTER_Y-HEIGHT/2);
+        super(Pong.GAME_CENTER_X-WIDTH/2, Pong.GAME_CENTER_Y-HEIGHT/2, 0,0);
         randSpeed();
     }
 
@@ -26,25 +25,17 @@ public class Ball extends AbstractPositionable {
         double vectorSpeed = 3.5;
         double angle = Math.toRadians(rand.nextInt(91)-45);
         int invert = rand.nextInt(2);
-        dy = Math.sin(angle)*vectorSpeed;
-        dx = Math.cos(angle)*vectorSpeed;
+        setDy(Math.sin(angle)*vectorSpeed);
+        setDx(Math.cos(angle)*vectorSpeed);
         if (invert == 1) {
-            dx *= -1;
-            dy *= -1;
+            invertDx();
+            invertDy();
         }
     }
 
     public void move() {
         setX(getX()+getDx());
         setY(getY()+getDy());
-    }
-
-    public void invertDx() {
-        this.dx *= -1;
-    }
-
-    public void invertDy() {
-        this.dy *= -1;
     }
 
     @Override
@@ -57,19 +48,4 @@ public class Ball extends AbstractPositionable {
         return HEIGHT;
     }
 
-    public double getDx() {
-        return dx;
-    }
-
-    public void setDx(double dx) {
-        this.dx = dx;
-    }
-
-    public double getDy() {
-        return dy;
-    }
-
-    public void setDy(double dy) {
-        this.dy = dy;
-    }
 }

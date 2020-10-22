@@ -17,8 +17,8 @@ public class Paddle extends AbstractPositionable {
     private boolean isMovingUp;
     private boolean isMovingDown;
 
-    public Paddle(double x, double y) {
-        super(x,y);
+    public Paddle(double x, double y, double dx, double dy) {
+        super(x,y,dx,dy);
     }
 
     @Override
