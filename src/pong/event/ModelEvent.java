@@ -11,7 +11,8 @@ public class ModelEvent {
     public enum Type {
         BALL_HIT_PADDLE,
         BALL_HIT_WALL_CEILING,
-        NEW_BALL
+        NEW_BALL,
+        GAME_STARTED
     }
 
     public final ModelEvent.Type type;

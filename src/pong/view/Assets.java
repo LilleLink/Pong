@@ -43,6 +43,7 @@ public abstract class Assets {
     // -------------- Audio handling -----------------------------
 
     public AudioClip ballHitPaddle = getSound("ballhitpaddle.wav");
+    public AudioClip ROLF = getSound("ROLF2.mp3");
 
     // -------------- Methods binding objects/classes to assets -----------------
 

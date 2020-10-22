@@ -24,8 +24,7 @@ import pong.view.theme.Duckie;
 import pong.view.theme.Rolf;
 
 import static java.lang.System.out;
-import static pong.model.Paddle.PADDLE_HEIGHT;
-import static pong.model.Paddle.PADDLE_SPEED;
+import static pong.model.Paddle.*;
 import static pong.model.Pong.GAME_HEIGHT;
 import static pong.model.Pong.GAME_WIDTH;
 
@@ -114,15 +113,17 @@ public class PongGUI extends Application implements IEventHandler {
         Paddle rightPaddle = null;
         Paddle leftPaddle = null;
 
-        leftPaddle = new Paddle(20, GAME_HEIGHT/2-PADDLE_HEIGHT/2,0,0);
-        rightPaddle = new Paddle(GAME_WIDTH-20, GAME_HEIGHT/2-PADDLE_HEIGHT/2,0,0);
+        leftPaddle = new Paddle(PADDLE_WIDTH, GAME_HEIGHT/2-PADDLE_HEIGHT/2,0,0);
+        rightPaddle = new Paddle(GAME_WIDTH-PADDLE_WIDTH*2, GAME_HEIGHT/2-PADDLE_HEIGHT/2,0,0);
         Ball b = new Ball();
 
         pong = new Pong(b, leftPaddle, rightPaddle, new Floor(), new Ceiling());
 
         // Map objects to sprites
-        assets.bind(rightPaddle, assets.rightPaddle);
-        assets.bind(leftPaddle, assets.leftPaddle);
+        if (!assets.getClass().getSimpleName().equals("Rolf")) {
+            assets.bind(rightPaddle, assets.rightPaddle);
+            assets.bind(leftPaddle, assets.leftPaddle);
+        }
 
         // Start game
         timer.start();
@@ -147,6 +148,8 @@ public class PongGUI extends Application implements IEventHandler {
             assets.ballHitPaddle.play();
         } else if (evt.type == ModelEvent.Type.BALL_HIT_WALL_CEILING) {
             assets.ballHitPaddle.play();
+        } else if (evt.type == ModelEvent.Type.GAME_STARTED && assets.getClass().getSimpleName().equals("Rolf")) {
+            assets.ROLF.play();
         }
     }
 

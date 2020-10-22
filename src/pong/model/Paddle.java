@@ -11,7 +11,7 @@ import static pong.model.Pong.GAME_HEIGHT;
  */
 public class Paddle extends AbstractPositionable {
 
-    public static final double PADDLE_WIDTH = 10;
+    public static final double PADDLE_WIDTH = 30;
     public static final double PADDLE_HEIGHT = 60;
     public static final double PADDLE_SPEED = 5;
     private boolean isMovingUp;

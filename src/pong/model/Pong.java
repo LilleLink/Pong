@@ -1,6 +1,7 @@
 package pong.model;
 
 
+import javafx.event.Event;
 import pong.event.ModelEvent;
 import pong.event.EventBus;
 
@@ -39,6 +40,8 @@ public class Pong {
         this.p2 = p2;
         this.f = f;
         this.c = c;
+
+        EventBus.INSTANCE.publish(new ModelEvent(ModelEvent.Type.GAME_STARTED));
     }
 
     // --------  Game Logic -------------
