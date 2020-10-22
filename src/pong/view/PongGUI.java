@@ -21,6 +21,7 @@ import pong.event.ModelEvent;
 import pong.event.EventBus;
 import pong.view.theme.Cool;
 import pong.view.theme.Duckie;
+import pong.view.theme.Rolf;
 
 import static java.lang.System.out;
 import static pong.model.Paddle.PADDLE_HEIGHT;
@@ -176,6 +177,9 @@ public class PongGUI extends Application implements IEventHandler {
                     break;
                 case "Duckie":
                     assets = new Duckie();
+                    break;
+                case "Rolf":
+                    assets = new Rolf();
                     break;
                 default:
                     throw new IllegalArgumentException("No such assets " + s);

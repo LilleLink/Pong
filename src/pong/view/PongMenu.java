@@ -37,6 +37,7 @@ public class PongMenu extends MenuBar {
         getItemByText(menuFile, "Stop").setDisable(false);
         getItemByText(menuThemes, "Cool").setDisable(true);
         getItemByText(menuThemes, "Duckie").setDisable(true);
+        getItemByText(menuThemes, "Rolf").setDisable(true);
     }
 
     public void fixMenusKillGame() {
@@ -44,6 +45,7 @@ public class PongMenu extends MenuBar {
         getItemByText(menuFile, "Stop").setDisable(true);
         getItemByText(menuThemes, "Cool").setDisable(false);
         getItemByText(menuThemes, "Duckie").setDisable(false);
+        getItemByText(menuThemes, "Rolf").setDisable(false);
     }
 
     // ------------  Helpers -----------------------------
@@ -72,9 +74,10 @@ public class PongMenu extends MenuBar {
         RadioMenuItem cool = new RadioMenuItem("Cool");
         cool.setSelected(true);
         RadioMenuItem duckie = new RadioMenuItem("Duckie");
+        RadioMenuItem rolf =  new RadioMenuItem("Rolf");
         cool.setToggleGroup(toggleGroup);
         duckie.setToggleGroup(toggleGroup);
-        menuThemes.getItems().addAll(cool, duckie);
+        menuThemes.getItems().addAll(cool, duckie, rolf);
         return menuThemes;
     }
 
